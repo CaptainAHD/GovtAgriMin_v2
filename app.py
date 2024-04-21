@@ -125,10 +125,10 @@ def save_uploaded_file(uploaded_file):
 if audio_file is not None:
     st.audio(audio_file, format="audio/wav")
     # Save uploaded audio file
-    file_path = save_uploaded_file(audio_file)
+    # file_path = save_uploaded_file(audio_file)
     # Transcribe audio and update query input field
     st.write("Transcribing audio...")
-    transcribed_text = transcribe_audio(file_path)
+    transcribed_text = transcribe_audio(audio_file)
     if transcribed_text:
         st.write("Transcription complete!")
     else:
