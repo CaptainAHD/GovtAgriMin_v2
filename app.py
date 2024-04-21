@@ -74,13 +74,13 @@ def text_to_speech(text, audio_format=texttospeech.AudioEncoding.MP3):
 
 translator = Translator()
 
-def translate_to_english(text, source):
-    try:
-        translated_text = translator.translate(text, src= source, dest='en').text
-        return translated_text
-    except Exception as e:
-        st.error(f"Translation failed: {e}")
-        return text  # Return the original text if translation fails
+# def translate_to_english(text, source):
+#     try:
+#         translated_text = translator.translate(text, src= source, dest='en').text
+#         return translated_text
+#     except Exception as e:
+#         st.error(f"Translation failed: {e}")
+#         return text  # Return the original text if translation fails
 
 # def translate_to_english(text, target_language):
 #     try:
@@ -95,22 +95,22 @@ def translate_to_english(text, source):
 #         st.error(f"Translation failed: {e}")
 #         return text  # Return the original text if translation fails
 
-# def translate_to_english(text, target_language="en"):
-#     prompt = f"Translate the following text from its language to English:\n\n{text}\n\nTranslate to English:"
-#     response = openai.ChatCompletion.create(
-#         model="gpt-4",
-#         messages=[
-#             {
-#                 "role": "system",
-#                 "content": prompt
-#             }
-#         ],
-#         temperature=0,
-#         max_tokens=150,
-#         stop=["\n"]
-#     )
-#     translated_text = response.choices[0].text.strip()
-#     return translated_text
+def translate_to_english(text, source):
+    prompt = f"Translate the following text from {source} to English:\n\n{text}\n\nTranslate to English:"
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {
+                "role": "system",
+                "content": prompt
+            }
+        ],
+        temperature=0,
+        max_tokens=150,
+        stop=["\n"]
+    )
+    translated_text = response.choices[0].text.strip()
+    return translated_text
 
 # Function to save audio data to a temporary file
 def save_audio_to_tempfile(audio_data, samplerate):
