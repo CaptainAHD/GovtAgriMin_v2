@@ -206,13 +206,13 @@ if query and top_k:
             top3_name.append(i["Document"])
         temp_summary = []
         # translated_query = translate_to_english(text=transcribed_text)
-        translated_query = translate_to_english(text=transcribed_text, target_language="en")
+        # translated_query = translate_to_english(text=transcribed_text, target_language="en")
         for resp in client.chat.completions.create(
             model="gpt-4-1106-preview",
             messages=[
                 {
                     "role": "system",
-                    "content": f"Act as a query answering GPT for The Ministry of Agriculture and Farmers Welfare, India. You answer queries of officers and farmers using your knowledgebase. Now answer the {translated_query}, using the following knowledgebase:{top3} Your knowledgebase also contains name of the document, give it when answering so as to making your answer clear: {top3_name}. Strictly answer based on the available knowledge base. And remember, you must answer the query in easy to understand, everyday spoken language of {query}",
+                    "content": f"Act as a query answering GPT for The Ministry of Agriculture and Farmers Welfare, India. You answer queries of officers and farmers using your knowledgebase. Now answer the {query}, using the following knowledgebase:{top3} Your knowledgebase also contains name of the document, give it when answering so as to making your answer clear: {top3_name}. Strictly answer based on the available knowledge base. And remember, you must answer the query in easy to understand, everyday spoken language of {query}",
                 },
                 {
                     "role": "user",
