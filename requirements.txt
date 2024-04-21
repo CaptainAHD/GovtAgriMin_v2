@@ -14,3 +14,4 @@ langdetect
 googletrans
 openai==1.21.2
 deep-translator
+deepgram-sdk
