@@ -19,6 +19,7 @@ translator = GoogleTranslator(source='auto', target='en')
 
 st.set_page_config(layout="wide")
 
+st.title('Crop Data Search System')
 client = OpenAI()
 
 audio_file_path = ""  # Define audio_file_path globally
