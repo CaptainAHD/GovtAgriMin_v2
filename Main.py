@@ -8,6 +8,7 @@ from openai import OpenAI
 
 st.set_page_config(layout="wide")
 
+st.title('Crop Data Search System')
 # os.environ["OPENAI_API_KEY"] = ""
 # API_KEY = ""
 client = OpenAI()
