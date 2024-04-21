@@ -14,6 +14,7 @@ from google.oauth2 import service_account
 from deep_translator import GoogleTranslator
 from deepgram import (DeepgramClient, PrerecordedOptions,FileSource,)
 
+
 translator = GoogleTranslator(source='auto', target='en')
 
 st.set_page_config(layout="wide")
@@ -74,38 +75,38 @@ def translate_to_english(text):
         st.error(f"Translation failed: {e}")
         return text  # Return the original text if translation fails
 
-# Function to save audio data to a temporary file
-def save_audio_to_tempfile(audio_data, samplerate):
-    with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as tmpfile:
-        tmpfile_name = tmpfile.name
-        sf.write(tmpfile_name, audio_data, samplerate)
-    return tmpfile_name
-KEY = "2546f160a0b84fcbb889a7228238885060774086"
-deepgram = DeepgramClient("KEY")
+KEY = "02d5d24b2b6394603fb8ba28ffb69dd7ef58ae73"
+deepgram = DeepgramClient(KEY)
 # Function to transcribe audio using Deepgram API
 def transcribe_audio(audio):
     try:
         # STEP 1 Create a Deepgram client using the API key
-
-        with open(audio, "rb") as file:
-            buffer_data = file.read()
-
-        payload: FileSource = {
-            "buffer": buffer_data,
-        }
-
-
-        #STEP 2: Configure Deepgram options for audio analysis
-        options = PrerecordedOptions(
-            model="nova-2",
-            smart_format=True,
+        audio_file = open(audio, "rb")
+        transcription = client.audio.translations.create(
+        model="whisper-1", 
+        file=audio_file, 
+        response_format="text"
         )
 
-        # STEP 3: Call the transcribe_url method with the audio payload and options
-        response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
+        # with open(audio, "rb") as file:
+        #     buffer_data = file.read()
 
-        # STEP 4: Print the response
-        return response.results.channels[0]["alternatives"][0]["transcript"]
+        # payload: FileSource = {
+        #     "buffer": buffer_data,
+        # }
+
+
+        # #STEP 2: Configure Deepgram options for audio analysis
+        # options = PrerecordedOptions(
+        #     model="nova-2",
+        #     smart_format=True,
+        # )
+
+        # # STEP 3: Call the transcribe_url method with the audio payload and options
+        # response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
+
+        # # STEP 4: Print the response
+        # return response.results.channels[0]["alternatives"][0]["transcript"]
 
     except Exception as e:
         return f"Exception: {e}"
