@@ -109,7 +109,8 @@ if audio_file is not None:
     # Transcribe audio and update query input field
     st.write("Transcribing audio...")
     
-    query = transcribe_audio(file_path)
+    transcribed_text = transcribe_audio(file_path)
+    query= transcribed_text
     if transcribed_text:
         st.write("Query: ", transcribed_text)
     else:
