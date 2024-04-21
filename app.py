@@ -112,7 +112,7 @@ if audio_file is not None:
     transcribed_text = transcribe_audio(file_path)
     if transcribed_text:
         st.write("Transcription complete!")
-        st.write(transcrobed_text)
+        st.write(transcribed_text)
     else:
         st.write("Failed to transcribe audio.")
     if source_language != "English":
