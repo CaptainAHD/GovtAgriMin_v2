@@ -77,7 +77,7 @@ def text_to_speech(text, audio_format=texttospeech.AudioEncoding.MP3):
 
 def translate_to_english(text):
     try:
-        translated_text = translator.translate(text, dest='en').text
+        translated_text = translator.translate(text, lang_tgt='en').text
         return translated_text
     except Exception as e:
         st.error(f"Translation failed: {e}")
