@@ -83,11 +83,11 @@ def save_audio_to_tempfile(audio_data, samplerate):
 KEY = "2546f160a0b84fcbb889a7228238885060774086"
 deepgram = DeepgramClient("KEY")
 # Function to transcribe audio using Deepgram API
-def transcribe_audio(audio_file_path):
+def transcribe_audio(audio):
     try:
         # STEP 1 Create a Deepgram client using the API key
 
-        with open(AUDIO_FILE, "rb") as file:
+        with open(audio, "rb") as file:
             buffer_data = file.read()
 
         payload: FileSource = {
