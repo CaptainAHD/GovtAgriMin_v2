@@ -109,17 +109,17 @@ if audio_file is not None:
     # Transcribe audio and update query input field
     st.write("Transcribing audio...")
     
-    transcribed_text = transcribe_audio(file_path)
+    query = transcribe_audio(file_path)
     if transcribed_text:
         st.write("Query: ", transcribed_text)
     else:
         st.write("Failed to transcribe audio.")
     if source_language != "English":
-        query = translate_to_english(
+        translated_query = translate_to_english(
             text= transcribed_text
         )
     else:
-        query = transcribed_text
+        translated_query = transcribed_text
 
 
 
@@ -180,7 +180,7 @@ if query and top_k:
             messages=[
                 {
                     "role": "system",
-                    "content": f"Act as a query answering GPT for The Ministry of Agriculture and Farmers Welfare, India. You answer queries of officers and farmers using your knowledgebase. Now answer the {query}, using the following knowledgebase:{top3} Your knowledgebase also contains name of the document, give it when answering so as to making your answer clear: {top3_name}. Strictly answer based on the available knowledge base. And remember, you must answer the query in easy to understand, everyday spoken language of {query} or {transcribed_text}",
+                    "content": f"Act as a query answering GPT for The Ministry of Agriculture and Farmers Welfare, India. You answer queries of officers and farmers using your knowledgebase. Now answer the {query}, using the following knowledgebase:{top3} Your knowledgebase also contains name of the document, give it when answering so as to making your answer clear: {top3_name}. Strictly answer based on the available knowledge base. And remember, you must answer the query in easy to understand, everyday spoken language of {query}.",
                 },
                 {
                     "role": "user",
