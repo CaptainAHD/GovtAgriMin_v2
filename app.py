@@ -76,15 +76,8 @@ translator = Translator()
 
 def translate_to_english(text, source):
     try:
-        # Detect the language of the text
-        detected_lang = detect_language(text)
-        
-        # If the detected language is not English, translate it to English
-        if detected_lang != 'en':
-            translated_text = translator.translate(text, src= source, dest='en').text
-            return translated_text
-        else:
-            return text  # Return the original text if it's already in English
+        translated_text = translator.translate(text, src= source, dest='en').text
+        return translated_text
     except Exception as e:
         st.error(f"Translation failed: {e}")
         return text  # Return the original text if translation fails
