@@ -88,6 +88,8 @@ def transcribe_audio(audio):
         response_format="text"
         )
 
+        return transcription
+
         # with open(audio, "rb") as file:
         #     buffer_data = file.read()
 
