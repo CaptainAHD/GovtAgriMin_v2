@@ -12,7 +12,7 @@ import base64
 import requests
 from google.oauth2 import service_account
 from deep_translator import GoogleTranslator
-from deepgram import (DeepgramClient, PrerecordedOptions,)
+from deepgram import (DeepgramClient, PrerecordedOptions,FileSource,)
 
 translator = GoogleTranslator(source='auto', target='en')
 
@@ -87,6 +87,13 @@ def transcribe_audio(audio_file_path):
     try:
         # STEP 1 Create a Deepgram client using the API key
 
+        with open(AUDIO_FILE, "rb") as file:
+            buffer_data = file.read()
+
+        payload: FileSource = {
+            "buffer": buffer_data,
+        }
+
 
         #STEP 2: Configure Deepgram options for audio analysis
         options = PrerecordedOptions(
@@ -95,7 +102,7 @@ def transcribe_audio(audio_file_path):
         )
 
         # STEP 3: Call the transcribe_url method with the audio payload and options
-        response = deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
+        response = deepgram.listen.prerecorded.v("1").transcribe_url(payload, options)
 
         # STEP 4: Print the response
         return response.results.channels[0]["alternatives"][0]["transcript"]
