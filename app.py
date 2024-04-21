@@ -127,7 +127,7 @@ if audio_file is not None:
         st.write("Failed to transcribe audio.")
 query = st.text_input(label="Please enter your query - ", key="query_input")
 # Modify query input field to allow for multiple languages
-source_language = st.selectbox("Select Source Language:", ["English", "Spanish", "French", "German", "Hindi", "Bengali", "Telugu", "Marathi", "Tamil", "Urdu", "Gujarati", "Kannada", "Odia", "Malayalam", "Punjabi", "Assamese", "Maithili"]) # Add more languages as needed
+source_language = st.selectbox("Select Source Language:", ["English", "Other"]) # Add more languages as needed
 if audio_file is not None:
     if source_language != "English":
         translated_query = translate_to_english(
