@@ -94,7 +94,7 @@ def transcribe_audio(audio):
 
 query = st.text_input(label="Please enter your query - ", key="query_input")
 transcribed_text = ""  # Define a default value for transcribed_text
-
+source_language = st.selectbox("Select Source Language:", ["English", "Other"]) # Add more languages as needed
 # Add audio input functionality
 audio_file = st.file_uploader("Upload an audio file", type=["mp3"])
 # Function to save uploaded audio file
@@ -123,7 +123,7 @@ if audio_file is not None:
 
 
 # Modify query input field to allow for multiple languages
-source_language = st.selectbox("Select Source Language:", ["English", "Other"]) # Add more languages as needed
+
 if audio_file is not None:
     if source_language != "English":
         translated_query = translate_to_english(
