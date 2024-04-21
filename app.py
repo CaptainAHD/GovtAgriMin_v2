@@ -119,7 +119,7 @@ transcribed_text = ""  # Define a default value for transcribed_text
 audio_file = st.file_uploader("Upload an audio file", type=["mp3"])
 # Function to save uploaded audio file
 def save_uploaded_file(uploaded_file):
-    with open("temp_audio.wav", "wb") as f:
+    with open("temp_audio.mp3", "wb") as f:
         f.write(uploaded_file.getbuffer())
     return "temp_audio.mp3"
 if audio_file is not None:
