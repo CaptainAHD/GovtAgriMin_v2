@@ -108,9 +108,11 @@ if audio_file is not None:
     file_path = save_uploaded_file(audio_file)
     # Transcribe audio and update query input field
     st.write("Transcribing audio...")
+    
     transcribed_text = transcribe_audio(file_path)
     if transcribed_text:
         st.write("Transcription complete!")
+        st.write(transcrobed_text)
     else:
         st.write("Failed to transcribe audio.")
     if source_language != "English":
