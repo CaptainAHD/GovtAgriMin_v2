@@ -74,14 +74,14 @@ def text_to_speech(text, audio_format=texttospeech.AudioEncoding.MP3):
 
 translator = Translator()
 
-def translate_to_english(text):
+def translate_to_english(text, source):
     try:
         # Detect the language of the text
         detected_lang = detect_language(text)
         
         # If the detected language is not English, translate it to English
         if detected_lang != 'en':
-            translated_text = translator.translate(text, src=detected_lang, dest='en').text
+            translated_text = translator.translate(text, src= source, dest='en').text
             return translated_text
         else:
             return text  # Return the original text if it's already in English
@@ -176,7 +176,7 @@ query = st.text_input(label="Please enter your query - ", key="query_input")
 source_language = st.selectbox("Select Source Language:", ["English", "Spanish", "French", "German", "Hindi", "Bengali", "Telugu", "Marathi", "Tamil", "Urdu", "Gujarati", "Kannada", "Odia", "Malayalam", "Punjabi", "Assamese", "Maithili"]) # Add more languages as needed
 if source_language != "English":
     translated_query = translate_to_english(
-        text= query, source_language=source_language
+        text= query, source=source_language
     )
 else:
     translated_query = query
