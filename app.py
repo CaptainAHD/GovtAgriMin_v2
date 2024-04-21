@@ -116,14 +116,14 @@ query = st.text_input(label="Please enter your query - ", key="query_input")
 transcribed_text = ""  # Define a default value for transcribed_text
 
 # Add audio input functionality
-audio_file = st.file_uploader("Upload an audio file", type=["wav", "mp3"])
+audio_file = st.file_uploader("Upload an audio file", type=["mp3"])
 # Function to save uploaded audio file
 def save_uploaded_file(uploaded_file):
     with open("temp_audio.wav", "wb") as f:
         f.write(uploaded_file.getbuffer())
-    return "temp_audio.wav"
+    return "temp_audio.mp3"
 if audio_file is not None:
-    st.audio(audio_file, format="audio/wav")
+    st.audio(audio_file, format="mp3")
     # Save uploaded audio file
     file_path = save_uploaded_file(audio_file)
     # Transcribe audio and update query input field
