@@ -12,6 +12,7 @@ import base64
 import requests
 from google.oauth2 import service_account
 from deep_translator import GoogleTranslator
+from deepgram import (DeepgramClient, PrerecordedOptions,)
 
 translator = GoogleTranslator(source='auto', target='en')
 
@@ -82,27 +83,40 @@ def save_audio_to_tempfile(audio_data, samplerate):
 
 # Function to transcribe audio using Deepgram API
 def transcribe_audio(audio_file_path):
-    api_key = "e07390d5c0b035bf435df507032ad66181f5eafa"
-    url = "https://api.deepgram.com/v1/listen?model=nova-2"
-    headers = {
-        "Authorization": f"Token {api_key}",
-        "Content-Type": "audio/wav",
-    }
-    with open(audio_file_path, "rb") as f:
-        audio_data = f.read()
-    response = requests.post(url, headers=headers, data=audio_data)
-    print("Response status code:", response.status_code)  # Debugging statement
-    if response.status_code == 200:
-        result = response.json()
-        print("Transcription result:", result)  # Debugging statement
-        if "results" in result and "channels" in result["results"] and result["results"]["channels"]:
-            transcripts = result["results"]["channels"][0]["alternatives"][0]["transcript"]
-            return transcripts
-        else:
-            print("No transcripts found in result.")  # Debugging statement
-    else:
-        print("Failed to transcribe audio. Error:", response.text)  # Debugging statement
-    return None
+    api_key = "01521aa90c7f5dd885e6a8a78c9757083aad99e8"
+    try:
+        # STEP 1 Create a Deepgram client using the API key
+        deepgram = DeepgramClient(API_KEY)
+
+        #STEP 2: Configure Deepgram options for audio analysis
+        options = PrerecordedOptions(
+            model="nova-2",
+            smart_format=True,
+        )
+
+        # STEP 3: Call the transcribe_url method with the audio payload and options
+        response = deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
+
+        # STEP 4: Print the response
+        return response.results.channels[0]["alternatives"][0]["transcript"]
+
+    except Exception as e:
+        return f"Exception: {e}"
+    # with open(audio_file_path, "rb") as f:
+    #     audio_data = f.read()
+    # response = requests.post(url, headers=headers, data=audio_data)
+    # print("Response status code:", response.status_code)  # Debugging statement
+    # if response.status_code == 200:
+    #     result = response.json()
+    #     print("Transcription result:", result)  # Debugging statement
+    #     if "results" in result and "channels" in result["results"] and result["results"]["channels"]:
+    #         transcripts = result["results"]["channels"][0]["alternatives"][0]["transcript"]
+    #         return transcripts
+    #     else:
+    #         print("No transcripts found in result.")  # Debugging statement
+    # else:
+    #     print("Failed to transcribe audio. Error:", response.text)  # Debugging statement
+    # return None
 
 # Function to save uploaded audio file
 def save_uploaded_file(uploaded_file):
