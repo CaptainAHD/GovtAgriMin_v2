@@ -134,7 +134,7 @@ if audio_file is not None:
             text= transcribed_text
         )
     else: 
-        transcribed_text
+        translated_query = transcribed_text
 
 else:
     if source_language != "English":
