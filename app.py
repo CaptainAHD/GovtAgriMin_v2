@@ -102,7 +102,7 @@ def transcribe_audio(audio):
         )
 
         # STEP 3: Call the transcribe_url method with the audio payload and options
-        response = deepgram.listen.prerecorded.v("1").transcribe_url(payload, options)
+        response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
 
         # STEP 4: Print the response
         return response.results.channels[0]["alternatives"][0]["transcript"]
