@@ -11,9 +11,9 @@ from langdetect import detect
 import base64
 import requests
 from google.oauth2 import service_account
-from googletrans import Translator
-from google_trans_new import google_translator  
-translator = google_translator()  
+from deep_translator import GoogleTranslator
+
+translator = GoogleTranslator(source='auto', target='en')
 
 st.set_page_config(layout="wide")
 
@@ -77,7 +77,7 @@ def text_to_speech(text, audio_format=texttospeech.AudioEncoding.MP3):
 
 def translate_to_english(text):
     try:
-        translated_text = translator.translate(text, lang_tgt='en').text
+        translated_text = translator.translate(text).text
         return translated_text
     except Exception as e:
         st.error(f"Translation failed: {e}")
