@@ -74,41 +74,18 @@ def translate_to_english(text):
     except Exception as e:
         st.error(f"Translation failed: {e}")
         return text  # Return the original text if translation fails
-
-KEY = "02d5d24b2b6394603fb8ba28ffb69dd7ef58ae73"
-deepgram = DeepgramClient(KEY)
 # Function to transcribe audio using Deepgram API
 def transcribe_audio(audio):
     try:
         # STEP 1 Create a Deepgram client using the API key
         audio_file = open(audio, "rb")
-        transcription = client.audio.translations.create(
+        transcription = client.audio.transcriptions.create(
         model="whisper-1", 
         file=audio_file, 
         response_format="text"
         )
 
         return transcription
-
-        # with open(audio, "rb") as file:
-        #     buffer_data = file.read()
-
-        # payload: FileSource = {
-        #     "buffer": buffer_data,
-        # }
-
-
-        # #STEP 2: Configure Deepgram options for audio analysis
-        # options = PrerecordedOptions(
-        #     model="nova-2",
-        #     smart_format=True,
-        # )
-
-        # # STEP 3: Call the transcribe_url method with the audio payload and options
-        # response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
-
-        # # STEP 4: Print the response
-        # return response.results.channels[0]["alternatives"][0]["transcript"]
 
     except Exception as e:
         return f"Exception: {e}"
@@ -136,7 +113,12 @@ if audio_file is not None:
         st.write("Transcription complete!")
     else:
         st.write("Failed to transcribe audio.")
-    query = transcribed_text
+    if source_language != "English":
+        query = translate_to_english(
+            text= transcribed_text
+        )
+    else:
+        query = transcribed_text
 
 
 
