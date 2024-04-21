@@ -80,12 +80,13 @@ def save_audio_to_tempfile(audio_data, samplerate):
         tmpfile_name = tmpfile.name
         sf.write(tmpfile_name, audio_data, samplerate)
     return tmpfile_name
-
+KEY = st.secrets['API_KEY_DG']
+deepgram = DeepgramClient("KEY")
 # Function to transcribe audio using Deepgram API
 def transcribe_audio(audio_file_path):
     try:
         # STEP 1 Create a Deepgram client using the API key
-        deepgram = DeepgramClient(st.secrets['API_KEY_DG'])
+
 
         #STEP 2: Configure Deepgram options for audio analysis
         options = PrerecordedOptions(
