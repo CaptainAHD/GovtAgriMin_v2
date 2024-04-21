@@ -80,7 +80,7 @@ def save_audio_to_tempfile(audio_data, samplerate):
         tmpfile_name = tmpfile.name
         sf.write(tmpfile_name, audio_data, samplerate)
     return tmpfile_name
-KEY = st.secrets['API_KEY_DG']
+KEY = "2546f160a0b84fcbb889a7228238885060774086"
 deepgram = DeepgramClient("KEY")
 # Function to transcribe audio using Deepgram API
 def transcribe_audio(audio_file_path):
@@ -102,21 +102,6 @@ def transcribe_audio(audio_file_path):
 
     except Exception as e:
         return f"Exception: {e}"
-    # with open(audio_file_path, "rb") as f:
-    #     audio_data = f.read()
-    # response = requests.post(url, headers=headers, data=audio_data)
-    # print("Response status code:", response.status_code)  # Debugging statement
-    # if response.status_code == 200:
-    #     result = response.json()
-    #     print("Transcription result:", result)  # Debugging statement
-    #     if "results" in result and "channels" in result["results"] and result["results"]["channels"]:
-    #         transcripts = result["results"]["channels"][0]["alternatives"][0]["transcript"]
-    #         return transcripts
-    #     else:
-    #         print("No transcripts found in result.")  # Debugging statement
-    # else:
-    #     print("Failed to transcribe audio. Error:", response.text)  # Debugging statement
-    # return None
 
 # Function to save uploaded audio file
 def save_uploaded_file(uploaded_file):
