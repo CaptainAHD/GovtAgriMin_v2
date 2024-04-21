@@ -124,6 +124,7 @@ def save_uploaded_file(uploaded_file):
         f.write(uploaded_file.getbuffer())
     return "temp_audio.wav"
 
+query = st.text_input(label="Please enter your query - ", key="query_input")
 transcribed_text = ""  # Define a default value for transcribed_text
 
 # Add audio input functionality
@@ -139,7 +140,10 @@ if audio_file is not None:
         st.write("Transcription complete!")
     else:
         st.write("Failed to transcribe audio.")
-query = st.text_input(label="Please enter your query - ", key="query_input")
+    query = transcribed_text
+
+
+
 # Modify query input field to allow for multiple languages
 source_language = st.selectbox("Select Source Language:", ["English", "Other"]) # Add more languages as needed
 if audio_file is not None:
