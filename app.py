@@ -113,12 +113,6 @@ if audio_file is not None:
         st.write("Transcription complete!")
     else:
         st.write("Failed to transcribe audio.")
-    if source_language != "English":
-        query = translate_to_english(
-            text= transcribed_text
-        )
-    else:
-        query = transcribed_text
 
 
 
