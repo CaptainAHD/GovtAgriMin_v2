@@ -85,7 +85,7 @@ def save_audio_to_tempfile(audio_data, samplerate):
 def transcribe_audio(audio_file_path):
     try:
         # STEP 1 Create a Deepgram client using the API key
-        deepgram = DeepgramClient(API_KEY_DG)
+        deepgram = DeepgramClient(st.secrets['API_KEY_DG'])
 
         #STEP 2: Configure Deepgram options for audio analysis
         options = PrerecordedOptions(
