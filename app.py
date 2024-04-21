@@ -74,20 +74,20 @@ def text_to_speech(text, audio_format=texttospeech.AudioEncoding.MP3):
 
 translator = Translator()
 
-# def translate_to_english(text):
-#     try:
-#         # Detect the language of the text
-#         detected_lang = detect_language(text)
+def translate_to_english(text):
+    try:
+        # Detect the language of the text
+        detected_lang = detect_language(text)
         
-#         # If the detected language is not English, translate it to English
-#         if detected_lang != 'en':
-#             translated_text = translator.translate(text, src=detected_lang, dest='en').text
-#             return translated_text
-#         else:
-#             return text  # Return the original text if it's already in English
-#     except Exception as e:
-#         st.error(f"Translation failed: {e}")
-#         return text  # Return the original text if translation fails
+        # If the detected language is not English, translate it to English
+        if detected_lang != 'en':
+            translated_text = translator.translate(text, src=detected_lang, dest='en').text
+            return translated_text
+        else:
+            return text  # Return the original text if it's already in English
+    except Exception as e:
+        st.error(f"Translation failed: {e}")
+        return text  # Return the original text if translation fails
 
 # def translate_to_english(text, target_language):
 #     try:
@@ -102,22 +102,22 @@ translator = Translator()
 #         st.error(f"Translation failed: {e}")
 #         return text  # Return the original text if translation fails
 
-def translate_to_english(text, target_language="en"):
-    prompt = f"Translate the following text from its language to English:\n\n{text}\n\nTranslate to English:"
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {
-                "role": "system",
-                "content": prompt
-            }
-        ],
-        temperature=0,
-        max_tokens=150,
-        stop=["\n"]
-    )
-    translated_text = response.choices[0].text.strip()
-    return translated_text
+# def translate_to_english(text, target_language="en"):
+#     prompt = f"Translate the following text from its language to English:\n\n{text}\n\nTranslate to English:"
+#     response = openai.ChatCompletion.create(
+#         model="gpt-4",
+#         messages=[
+#             {
+#                 "role": "system",
+#                 "content": prompt
+#             }
+#         ],
+#         temperature=0,
+#         max_tokens=150,
+#         stop=["\n"]
+#     )
+#     translated_text = response.choices[0].text.strip()
+#     return translated_text
 
 # Function to save audio data to a temporary file
 def save_audio_to_tempfile(audio_data, samplerate):
@@ -176,13 +176,13 @@ if audio_file is not None:
 source_language = st.selectbox("Select Source Language:", ["English", "Spanish", "French", "German", "Hindi", "Bengali", "Telugu", "Marathi", "Tamil", "Urdu", "Gujarati", "Kannada", "Odia", "Malayalam", "Punjabi", "Assamese", "Maithili"]) # Add more languages as needed
 if source_language != "English":
     translated_query = translate_to_english(
-        text=transcribed_text, source_language=source_language
+        text= query, source_language=source_language
     )
 else:
-    translated_query = transcribed_text
+    translated_query = query
 
 # Update query input field with transcribed text
-query = st.text_input(label="Please enter your query - ", value=translated_query, key="query_input")
+query = st.text_input(label="Please enter your query - ", key="query_input")
 top_k = st.number_input(label="Top k - ", min_value=3, max_value=5, value=3, key="top_k_input")
 # Proceed with semantic search
 retriever, source_language = create_retriever(top_k, source_language)
@@ -192,7 +192,7 @@ if query and top_k:
     col1, col2 = st.columns([3, 2])
     with col1:
         response = []
-        for i in retriever.retrieve(query):
+        for i in retriever.retrieve(translated_query):
             response.append(
                 {
                     "Document": i.metadata["link"][40:-4],
