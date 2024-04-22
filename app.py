@@ -13,7 +13,16 @@ import requests
 from google.oauth2 import service_account
 from deep_translator import GoogleTranslator
 from deepgram import (DeepgramClient, PrerecordedOptions,FileSource,)
+import re
 
+def clean(text):
+    # Remove Markdown links
+    text = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', text)
+    # Remove Markdown images
+    text = re.sub(r'\!\[([^\]]+)\]\([^\)]+\)', r'\1', text)
+    # Remove other Markdown symbols
+    text = re.sub(r'[_*`~]', '', text)
+    return text
 
 translator = GoogleTranslator(source='auto', target='en')
 
@@ -256,9 +265,10 @@ Summary:
         st.write("")
         st.write("")
         st.write("")
-
+        
+        audio_result = clean(result)
         st.write("Audio")
-        audio_content = text_to_speech(result)
+        audio_content = text_to_speech(audio_result)
         audio_file_path = "data:audio/mp3;base64," + base64.b64encode(audio_content).decode("utf-8")
         st.audio(audio_file_path, format="audio/mp3")
 
